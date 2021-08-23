@@ -1,0 +1,16 @@
+﻿{
+	"start": "Program",
+
+	"nonterminals": [
+		"Program", "LambdaTerm"
+	],
+
+	"terminals": {
+		"Variable": "([a-z]|[A-z]|_)([a-z]|[A-z]|[0-9]|_)*"
+	},
+
+	"productions": {
+		"Program": [ "LambdaTerm" ],
+		"LambdaTerm": [ "lam <Variable> { <LambdaTerm> }" ]
+	}
+}
