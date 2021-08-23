@@ -21,6 +21,9 @@
     <ClCompile Include="grammar_t.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lexical_analysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -28,6 +31,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grammar_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lexical_analysis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

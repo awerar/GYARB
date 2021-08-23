@@ -27,3 +27,4 @@ grammar_t::grammar_t(json json)
 	start = json["start"].get<std::string>();
 	assert(non_terminals.find(start) != non_terminals.end());
 }
+
