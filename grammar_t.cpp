@@ -18,10 +18,10 @@ grammar_t::grammar_t(json json)
 {
 	start = json["start"].get<std::string>();
 
-	for (auto nt : json["nonterminals"]) non_terminals.insert(nt.get<std::string>());
-	for (auto t : json["terminals"])
+	for (auto& nt : json["nonterminals"]) non_terminals.insert(nt.get<std::string>());
+	for (auto& t : json["terminals"])
 	{
-
+		std::cout << json["terminals"][t.get<std::string>()];
 	}
 
 }
