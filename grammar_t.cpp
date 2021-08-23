@@ -15,13 +15,15 @@ grammar_t grammar_t::parse(std::string json_file_path)
 }
 
 grammar_t::grammar_t(json json)
-{
-	start = json["start"].get<std::string>();
+{	
+	std::vector<std::string> nt = json["nonterminals"];
+	terminals.insert(nt.begin(), nt.end());
 
-	for (auto& nt : json["nonterminals"]) non_terminals.insert(nt.get<std::string>());
-	for (auto& t : json["terminals"])
-	{
-		std::cout << json["terminals"][t.get<std::string>()];
+	for (auto& [t, regx] : json["terminals"].items()) {
+		terminals.insert(t);
+		regex2terminal.push_back(std::pair(std::regex(regx), t));
 	}
 
+	start = json["start"].get<std::string>();
+	assert(non_terminals.find(start) != non_terminals.end());
 }
