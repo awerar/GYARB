@@ -14,7 +14,7 @@ struct grammar_t
 {
 	std::string start;
 	std::unordered_set<std::string> non_terminals, terminals;
-	std::vector<std::pair<std::regex, std::string>> regex2terminal;
+	std::vector<std::pair<std::string, std::regex>> terminal_parsers;
 
 	static grammar_t parse(std::string json_file_path);
 

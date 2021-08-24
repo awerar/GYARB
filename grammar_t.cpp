@@ -16,12 +16,26 @@ grammar_t grammar_t::parse(std::string json_file_path)
 
 grammar_t::grammar_t(json json)
 {	
-	std::vector<std::string> nt = json["nonterminals"];
-	terminals.insert(nt.begin(), nt.end());
+	auto& nt = json["nonterminals"];
+	non_terminals.insert(nt.begin(), nt.end());
+	
+	for (std::string terminal : json["terminals"]) {
+		terminals.insert(terminal);
 
-	for (auto& [t, regx] : json["terminals"].items()) {
-		terminals.insert(t);
-		regex2terminal.push_back(std::pair(std::regex(regx), t));
+		auto& t2r = json["terminal2regex"];
+		auto iter = t2r.find(terminal);
+		std::string regex;
+		if(iter != t2r.end()) regex = iter.value().get<std::string>();
+		else {
+			//Turns the terminal into a plaintext regex
+
+			regex = terminal;
+			for (int i = 0; i < terminal.length(); i++) {
+				regex.insert(i * 2, "\\");
+			}
+		}
+
+		terminal_parsers.push_back(std::pair(terminal, std::regex(regex)));
 	}
 
 	start = json["start"].get<std::string>();

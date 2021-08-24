@@ -1,16 +1,24 @@
 ﻿{
-	"start": "Program",
+  "start": "Program",
 
-	"nonterminals": [
-		"Program", "LambdaTerm"
-	],
+  "nonterminals": [
+    "Program",
+    "LambdaTerm"
+  ],
 
-	"terminals": {
-		"Variable": "([a-z]|[A-z]|_)([a-z]|[A-z]|[0-9]|_)*"
-	},
+  "terminals": [
+    "lam",
+    "{",
+    "}",
+    "Variable"
+  ],
 
-	"productions": {
-		"Program": [ "LambdaTerm" ],
-		"LambdaTerm": [ "lam <Variable> { <LambdaTerm> }" ]
-	}
+  "terminal2regex": {
+    "Variable": "([a-z]|[A-z]|_)([a-z]|[A-z]|[0-9]|_)*"
+  },
+
+  "productions": {
+    "Program": [ "LambdaTerm" ],
+    "LambdaTerm": [ "lam <Variable> { <LambdaTerm> }" ]
+  }
 }
