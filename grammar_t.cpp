@@ -27,7 +27,7 @@ grammar_t::grammar_t(json json)
 		std::string regex;
 		if(iter != t2r.end()) regex = iter.value().get<std::string>();
 		else {
-			//Turns the terminal into a plaintext regex
+			//Turns the terminal into a plaintext regex match
 
 			regex = terminal;
 			for (int i = 0; i < terminal.length(); i++) {
