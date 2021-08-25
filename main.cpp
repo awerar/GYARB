@@ -6,5 +6,5 @@
 
 int main()
 {
-    grammar_t g = grammar_t::parse("grammar.json");
+    
 }
