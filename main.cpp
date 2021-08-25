@@ -2,7 +2,6 @@
 //
 
 #include <iostream>
-#include "grammar_t.h"
 
 int main()
 {
