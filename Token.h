@@ -10,5 +10,8 @@ enum class Token {
 	ReadNum, ReadChar, PrintNum, PrintChar,
 
 	//Symbols
-	OpenParentheses = '(', ClosedParebtheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}'
+	OpenParentheses = '(', ClosedParebtheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
+
+	//Non terminals
+	Goal, LambdaTerm, 
 };

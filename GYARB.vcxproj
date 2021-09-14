@@ -151,10 +151,16 @@
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ParseNode.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="ParserTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="ParseNode.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParserTable.h" />
     <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
