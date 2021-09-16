@@ -4,22 +4,24 @@
 #include <map>
 #include "Token.h"
 #include "Parser.h"
+#include "Grammar.h"
 
 class ParserTable
 {
 	enum class ActionType
 	{
-		Shift, Reduce, Done, Error
+		Shift, Reduce, Done, Error, Goto
 	};
 
 	typedef std::pair<ActionType, std::any> Action;
 
 	std::vector<std::map<Token, Action>> actions;
+	const Grammar grammar;
 
-	Action get_action(int state, Token look_ahead);
+	Action get_action(int state, Token look_ahead) const;
+	int get_goto(int state, Token non_terminal) const;
 
 public:
-	ParserTable(int states);
-	void perform(int& state, ParseStack& stack, Token look_ahead) const;
-	void add_state(int state, Token token, Action action);
+	ParserTable(Grammar grammar);
+	bool perform(ParseStack* stack, Lexer* lexer) const;
 };

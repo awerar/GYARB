@@ -6,6 +6,8 @@
 #include <map>
 #include <any>
 
+//Simple LR Parser
+
 /*
 <Grammar>
 Goal: LambdaTerm Eof
@@ -15,7 +17,8 @@ LambdaTerm: lam Variable { LambdaTerm }
 LambdaTerm: READC | PRINTC | READN | PRINTN
 */
 
-typedef std::stack<ParseNode*> ParseStack;
+typedef std::pair<int, ParseNode*> ParseStackFrame;
+typedef std::stack<ParseStackFrame> ParseStack;
 
 class Parser
 {

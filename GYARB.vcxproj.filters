@@ -53,6 +53,9 @@
     <ClInclude Include="ParserTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Grammar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="program.txt" />
