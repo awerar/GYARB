@@ -16,11 +16,11 @@ enum class Token {
 	OpenParentheses = '(', ClosedParebtheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
 
 	//Non terminals
-	Goal, LambdaTerm, 
+	Program, LambdaTerm, 
 };
 
-std::unordered_set<Token> non_terminals = {
-	Token::Goal, Token::LambdaTerm
+const std::unordered_set<Token> non_terminals = {
+	Token::Program, Token::LambdaTerm
 };
 
 bool is_terminal(Token token);

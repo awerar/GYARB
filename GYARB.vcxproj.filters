@@ -27,7 +27,7 @@
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParseNode.cpp">
+    <ClCompile Include="ParserStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ParserTable.cpp">
@@ -50,13 +50,13 @@
     <ClInclude Include="Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParseNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParserTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Grammar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,11 @@
 #pragma once
 #include "Lexer.h"
 #include <stack>
-#include "ParseNode.h"
 #include <vector>
 #include <map>
 #include <any>
+#include "ParserStack.h"
+#include "ParserTable.h"
 
 //Simple LR Parser
 
@@ -17,13 +18,10 @@ LambdaTerm: lam Variable { LambdaTerm }
 LambdaTerm: READC | PRINTC | READN | PRINTN
 */
 
-typedef std::pair<int, ParseNode*> ParseStackFrame;
-typedef std::stack<ParseStackFrame> ParseStack;
-
 class Parser
 {
 	Lexer* lexer;
-	ParserTable table;
+	const ParserTable table;
 
 public:
 	Parser(Lexer* lexer);

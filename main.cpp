@@ -5,16 +5,14 @@
 #include <fstream>
 #include "Lexer.h"
 #include "main.h"
+#include "Parser.h"
 
 using namespace std;
 
 int main()
 {
     Lexer* lexer = get_lexer("program.txt");
-    while (lexer->token() != Token::Eof) {
-        auto token = lexer->token();
-        lexer->advance();
-    }
+    Parser* parser = new Parser(lexer);
 }
 
 Lexer* get_lexer(string file_name) {

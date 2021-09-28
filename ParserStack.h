@@ -1,7 +1,9 @@
 #pragma once
 
+#include "ParserStack.h"
 #include <vector>
 #include "Token.h"
+#include <stack>
 
 struct ParseNode
 {
@@ -11,3 +13,6 @@ struct ParseNode
 	ParseNode(Token token);
 	~ParseNode();
 };
+
+typedef std::pair<int, ParseNode*> ParseStackFrame;
+typedef std::stack<ParseStackFrame> ParseStack;

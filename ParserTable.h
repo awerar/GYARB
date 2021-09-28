@@ -4,8 +4,9 @@
 #include <map>
 #include <unordered_map>
 #include "Token.h"
-#include "Parser.h"
 #include "Grammar.h"
+#include "ParserStack.h"
+#include "Lexer.h"
 
 class ParserTable
 {
