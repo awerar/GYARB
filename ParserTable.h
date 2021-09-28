@@ -2,6 +2,7 @@
 #include <vector>
 #include <any>
 #include <map>
+#include <unordered_map>
 #include "Token.h"
 #include "Parser.h"
 #include "Grammar.h"
@@ -16,6 +17,8 @@ class ParserTable
 	typedef std::pair<ActionType, std::any> Action;
 
 	std::vector<std::map<Token, Action>> actions;
+	std::unordered_map<Token, std::unordered_set<Token>> follows;
+	std::unordered_set<Token> tokens;
 	const Grammar grammar;
 
 	Action get_action(int state, Token look_ahead) const;

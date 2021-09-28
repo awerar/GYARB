@@ -2,6 +2,8 @@
 #include "Error.cpp"
 #include "Grammar.h"
 
+#include <unordered_map>
+
 ParserTable::Action ParserTable::get_action(int state, Token look_ahead) const
 {
 	if (state >= this->actions.size())
@@ -36,7 +38,21 @@ int ParserTable::get_goto(int state, Token non_terminal) const
 
 ParserTable::ParserTable(Grammar grammar) : grammar(grammar)
 {
-	//TODO: Generate table
+	for (const auto& [from, to] : grammar)
+	{
+		for (Token t : to) tokens.insert(t);
+		tokens.insert(from);
+	}
+
+	for (Token t : tokens) follows[t] = { Token::Eof };
+
+	for (const auto& [from, to] : grammar)
+	{
+		for (auto t_iter = to.begin(); (t_iter + 1) != to.end(); t_iter++)
+		{
+			follows[*t_iter].insert(*(t_iter + 1));
+		}
+	}
 }
 
 bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const

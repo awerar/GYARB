@@ -154,6 +154,7 @@
     <ClCompile Include="ParseNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserTable.cpp" />
+    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grammar.h" />
