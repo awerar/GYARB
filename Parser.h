@@ -22,8 +22,11 @@ class Parser
 {
 	Lexer* lexer;
 	const ParserTable table;
+	ParseNode* result;
 
 public:
 	Parser(Lexer* lexer);
 	~Parser();
+
+	ParseNode* parse();
 };

@@ -6,10 +6,16 @@
 Parser::Parser(Lexer* lexer)
 {
 	this->lexer = lexer;
+	this->result = NULL;
 	std::cout << table;
 }
 
 Parser::~Parser()
 {
 	delete lexer;
+}
+
+ParseNode* Parser::parse()
+{
+	if (result != NULL) return result;
 }
