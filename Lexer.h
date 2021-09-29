@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Token.h"
+#include "Grammar.h"
 #include <string>
 
 class Lexer {

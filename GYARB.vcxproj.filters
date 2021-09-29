@@ -33,15 +33,12 @@
     <ClCompile Include="ParserTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Token.cpp">
+    <ClCompile Include="Grammar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="main.h">

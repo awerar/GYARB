@@ -2,7 +2,7 @@
 
 #include "ParserStack.h"
 #include <vector>
-#include "Token.h"
+#include "Grammar.h"
 #include <stack>
 
 struct ParseNode

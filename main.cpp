@@ -11,6 +11,8 @@ using namespace std;
 
 int main()
 {
+    initialize_grammar();
+
     Lexer* lexer = get_lexer("program.txt");
     Parser* parser = new Parser(lexer);
 }

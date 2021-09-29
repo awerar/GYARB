@@ -149,12 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Error.cpp" />
+    <ClCompile Include="Grammar.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParserStack.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserTable.cpp" />
-    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grammar.h" />
@@ -163,7 +163,6 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserStack.h" />
     <ClInclude Include="ParserTable.h" />
-    <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="program.txt" />
