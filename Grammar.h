@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <string>
 #include "Grammar.h"
 
 enum class Token {
@@ -49,3 +50,4 @@ extern std::unordered_set<Token> terminals, non_terminals, tokens;
 void initialize_grammar();
 bool is_non_terminal(Token token);
 bool is_terminal(Token token);
+std::string get_token_name(Token token);

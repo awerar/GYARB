@@ -29,4 +29,5 @@ public:
 	~Parser();
 
 	ParseNode* parse();
+	void print_parse_tree(ParseNode* tree, int depth = 0);
 };

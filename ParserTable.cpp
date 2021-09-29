@@ -34,7 +34,7 @@ int ParserTable::get_goto(int state, Token non_terminal) const
 		throw Syntax_error{ "Invalid action type: not Goto" };
 	}
 
-	return std::any_cast<int>(action.first);
+	return std::any_cast<int>(action.second);
 }
 
 ParserTable::ParserTable()
@@ -179,12 +179,13 @@ bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 		int rhs_size = rule.second.size();
 
 		ParseNode* parent = new ParseNode(rule.first);
+		parent->children.resize(rhs_size);
 		for (int i = 0; i < rhs_size; i++)
 		{
 			ParseNode* child = stack->top().second;
 			stack->pop();
 
-			parent->children.push_back(child);
+			parent->children.at(rhs_size - i - 1) = child;
 		}
 
 		int old_state = stack->top().first;
@@ -214,6 +215,17 @@ bool ParserTable::items_sets_identical(const ParserTable::ParseItemSet& a, const
 }
 
 std::ostream& operator<<(std::ostream& out, ParserTable const& table) {
+	std::cout << "   ";
+
+	for (Token t : tokens) {
+		std::string msg = get_token_name(t);
+		std::cout << msg;
+
+		for (int i = 4; i > msg.size(); i--) out << " ";
+	}
+
+	std::cout << "\n";
+
 	for (int i = 0; i < table.actions.size(); i++) {
 		const auto& action = table.actions[i];
 
