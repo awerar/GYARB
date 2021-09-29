@@ -46,13 +46,13 @@ std::string get_token_name(Token token)
 	case Token::Lambda:
 		return "lam";
 	case Token::ReadNum:
-		break;
+		return "rn";
 	case Token::ReadChar:
-		break;
+		return "rc";
 	case Token::PrintNum:
-		break;
+		return "pn";
 	case Token::PrintChar:
-		break;
+		return "pc";
 	case Token::OpenParentheses:
 		return "(";
 	case Token::ClosedParebtheses:

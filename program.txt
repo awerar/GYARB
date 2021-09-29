@@ -4,7 +4,7 @@ lam add {
 	lam n2 {
 		lam f {
 			lam x {
-				n2(f)((n1(f)(x)))
+				n2(f)(n1(f)(x))
 			}
 		}
 	}

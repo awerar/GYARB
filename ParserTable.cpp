@@ -156,8 +156,12 @@ void ParserTable::compute_follows() {
 	}
 }
 
+int c = 0;
+
 bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 {
+	c++;
+
 	int curr_state = stack->top().first;
 	Token look_ahead = lexer->token();
 
@@ -195,6 +199,9 @@ bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 	else if (type == ActionType::Done) return true;
 	else if (type == ActionType::Error) throw Syntax_error{ "Error while parsomg with following error message: " + std::any_cast<std::string>(data) };
 
+	std::cout << "<############ STACK ############>\n";
+	print_parse_stack(*stack);
+
 	return false;
 }
 
@@ -219,6 +226,7 @@ std::ostream& operator<<(std::ostream& out, ParserTable const& table) {
 
 	for (Token t : tokens) {
 		std::string msg = get_token_name(t);
+		msg.resize(3, ' ');
 		std::cout << msg;
 
 		for (int i = 4; i > msg.size(); i--) out << " ";

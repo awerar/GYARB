@@ -16,3 +16,6 @@ struct ParseNode
 
 typedef std::pair<int, ParseNode*> ParseStackFrame;
 typedef std::stack<ParseStackFrame> ParseStack;
+
+void print_parse_tree(ParseNode* tree, int depth = 0);
+void print_parse_stack(ParseStack stack);

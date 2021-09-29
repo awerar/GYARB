@@ -16,7 +16,8 @@ int main()
     Lexer* lexer = get_lexer("program.txt");
     Parser* parser = new Parser(lexer);
     ParseNode* result = parser->parse();
-    parser->print_parse_tree(result);
+    std::cout << "FINAL TREE:\n";
+    print_parse_tree(result);
 }
 
 Lexer* get_lexer(string file_name) {

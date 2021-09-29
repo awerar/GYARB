@@ -25,7 +25,6 @@ enum class Token {
 typedef std::pair<Token, std::vector<Token>> GrammarRule;
 typedef std::vector<GrammarRule> Grammar;
 
-
 const int max_rule_size = 10;
 const Grammar grammar = Grammar {
 	GrammarRule(Token::Program, { Token::LambdaTerm, Token::Eof }),
