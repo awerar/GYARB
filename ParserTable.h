@@ -22,9 +22,11 @@ class ParserTable
 	typedef std::pair<ActionType, std::any> Action;
 
 	friend std::ostream& operator<<(std::ostream& out, ParserTable const& v);
+	friend std::ostream& operator<<(std::ostream& out, ParseItemSet const& item_set);
 
 	std::vector<std::map<Token, Action>> actions;
 	std::unordered_map<Token, std::unordered_set<Token>> follows;
+	std::vector<ParseItemSet> kernel_sets;
 
 	ParserTable::Action get_action(int state, Token look_ahead) const;
 	int get_goto(int state, Token non_terminal) const;
@@ -39,3 +41,5 @@ public:
 	ParserTable();
 	bool perform(ParseStack* stack, Lexer* lexer) const;
 };
+
+std::ostream& operator<<(std::ostream& out, ParserTable::ParseItemSet const& item_set);

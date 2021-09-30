@@ -8,9 +8,10 @@
 struct ParseNode
 {
 	Token token;
+	std::string text;
 	std::vector<ParseNode*> children;
 
-	ParseNode(Token token);
+	ParseNode(Token token, std::string text = "");
 	~ParseNode();
 };
 

@@ -16,7 +16,7 @@ ParserTable::Action ParserTable::get_action(int state, Token look_ahead) const
 		auto& row = this->actions[state];
 		if (row.count(look_ahead) == 0)
 		{
-			return Action(ActionType::Error, "No action exists for token in state " + std::to_string(state));
+			return Action(ActionType::Error, "No action exists for token " + get_token_name(look_ahead) + " in state " + std::to_string(state));
 		}
 		else
 		{
@@ -31,7 +31,7 @@ int ParserTable::get_goto(int state, Token non_terminal) const
 
 	if (action.first != ActionType::Goto)
 	{
-		throw Syntax_error{ "Invalid action type: not Goto" };
+		throw SyntaxError{ "Invalid action type: not Goto" };
 	}
 
 	return std::any_cast<int>(action.second);
@@ -68,8 +68,8 @@ bool ParserTable::must_have_reduction(Token token, int rule_id) {
 	return follows[grammar[rule_id].first].count(token) >= 1;
 }
 
-int ParserTable::insert_item_set(ParserTable::ParseItemSet new_set, std::vector<ParserTable::ParseItemSet>* sets) {
-	new_set = add_closure(new_set);
+int ParserTable::insert_item_set(ParserTable::ParseItemSet kernel_set, std::vector<ParserTable::ParseItemSet>* sets) {
+	auto new_set = add_closure(kernel_set);
 
 	for (int i = 0; i < sets->size(); i++) {
 		auto& set = sets->at(i);
@@ -79,6 +79,7 @@ int ParserTable::insert_item_set(ParserTable::ParseItemSet new_set, std::vector<
 
 	actions.push_back({ });
 	sets->push_back(new_set);
+	kernel_sets.push_back(kernel_set);
 	int new_set_id = sets->size() - 1;
 
 	std::unordered_map<Token, ParseItemSet> next_sets;
@@ -98,7 +99,7 @@ int ParserTable::insert_item_set(ParserTable::ParseItemSet new_set, std::vector<
 		}
 	}
 
-	for (auto next_set : next_sets) {
+	for (const auto &next_set : next_sets) {
 		int transition_state = insert_item_set(next_set.second, sets);
 		actions[new_set_id][next_set.first] = Action(is_terminal(next_set.first) ? ActionType::Shift : ActionType::Goto, transition_state);
 	}
@@ -138,30 +139,74 @@ ParserTable::ParseItemSet ParserTable::add_closure(ParserTable::ParseItemSet set
 	return result;
 }
 
-void ParserTable::compute_follows() {
-	for (const auto& [from, to] : grammar)
-	{
-		for (Token t : to) tokens.insert(t);
-		tokens.insert(from);
+std::unordered_set<Token> get_beginning_of(Token token, std::shared_ptr<std::unordered_set<Token>> visited) {
+	if (is_terminal(token)) return { token };
+
+	if (visited->count(token) != 0) return {};
+	visited->insert(token);
+
+	std::unordered_set<Token> res;
+
+	for (auto rule : token2rules[token]) {
+		Token b = *grammar[rule].second.begin();
+
+		if (is_terminal(b)) res.insert(b);
+		else {
+			auto starts = get_beginning_of(b, visited);
+			res.insert(starts.begin(), starts.end());
+		}
 	}
 
-	for (Token t : tokens) follows[t] = { Token::Eof };
+	return res;
+}
 
-	for (const auto& [from, to] : grammar)
+std::unordered_set<Token> get_ends_of(Token non_terminal, std::shared_ptr<std::unordered_set<Token>> visited)
+{
+	if (is_terminal(non_terminal)) return { };
+
+	if (visited->count(non_terminal) != 0) return {};
+	visited->insert(non_terminal);
+
+	std::unordered_set<Token> res;
+
+	for (auto rule : token2rules[non_terminal]) {
+		Token e = grammar[rule].second.back();
+
+		res.insert(e);
+		auto ends = get_ends_of(e, visited);
+		res.insert(ends.begin(), ends.end());
+	}
+
+	return res;
+}
+
+void ParserTable::compute_follows() {
+	for (int i = 0; i < grammar.size(); i++)
 	{
+		const auto& [from, to] = grammar[i];
+
 		for (auto t_iter = to.begin(); (t_iter + 1) != to.end(); t_iter++)
 		{
-			follows[*t_iter].insert(*(t_iter + 1));
+			Token token = *t_iter;
+			Token follow = *(t_iter + 1);
+
+			//if (!is_non_terminal(token)) continue;
+
+			auto token_ends = get_ends_of(token, std::make_shared<std::unordered_set<Token>>());
+			token_ends.insert(token);
+
+			auto follow_begins = get_beginning_of(follow, std::make_shared<std::unordered_set<Token>>());
+			for (auto end : follow_begins) {
+				for (auto beg : token_ends) {
+					follows[beg].insert(end);
+				}
+			}
 		}
 	}
 }
 
-int c = 0;
-
 bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 {
-	c++;
-
 	int curr_state = stack->top().first;
 	Token look_ahead = lexer->token();
 
@@ -171,7 +216,7 @@ bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 	if (type == ActionType::Shift)
 	{
 		int next_state = std::any_cast<int>(data);
-		ParseStackFrame new_stack_frame(next_state, new ParseNode(look_ahead));
+		ParseStackFrame new_stack_frame(next_state, new ParseNode(look_ahead, lexer->text()));
 
 		stack->push(new_stack_frame);
 		lexer->advance();
@@ -197,7 +242,7 @@ bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 		stack->push(ParseStackFrame(new_state, parent));
 	}
 	else if (type == ActionType::Done) return true;
-	else if (type == ActionType::Error) throw Syntax_error{ "Error while parsomg with following error message: " + std::any_cast<std::string>(data) };
+	else if (type == ActionType::Error) throw SyntaxError{ "Error while parsomg with following error message: " + std::any_cast<std::string>(data) };
 
 	//std::cout << "<############ STACK ############>\n";
 	//print_parse_stack(*stack);
@@ -222,7 +267,21 @@ bool ParserTable::items_sets_identical(const ParserTable::ParseItemSet& a, const
 }
 
 std::ostream& operator<<(std::ostream& out, ParserTable const& table) {
-	std::cout << "   ";
+	std::cout << "RULES:" << std::endl;
+
+	for (int i = 0; i < grammar.size(); i++) {
+		const auto& rule = grammar[i];
+
+		out << i << ": " << get_token_name(rule.first) << " => ";
+
+		for (Token t : rule.second) {
+			out << get_token_name(t) << " ";
+		}
+
+		out << std::endl;
+	}
+
+	std::cout << std::endl << "   ";
 
 	for (Token t : tokens) {
 		std::string msg = get_token_name(t);
@@ -276,8 +335,32 @@ std::ostream& operator<<(std::ostream& out, ParserTable const& table) {
 			for (int i = 3; i > msg.size(); i--) out << " ";
 		}
 
+		std::cout << table.kernel_sets[i];
+
 		out << "\n";
 	}
 
+	return out;
+}
+
+std::ostream& operator<<(std::ostream& out, ParserTable::ParseItemSet const& item_set)
+{
+	out << "[";
+	for (const auto& item : item_set) {
+		const auto& rule = grammar[item.first];
+		out << get_token_name(rule.first) << " => ";
+		for (int i = 0; i < rule.second.size(); i++) {
+			if (item.second == i) out << "* ";
+			out << get_token_name(rule.second[i]);
+
+			if (i != rule.second.size() - 1) std::cout << " ";
+		}
+
+		if (item.second == rule.second.size()) std::cout << " *";
+
+		if (item != *(--item_set.end())) out << ", ";
+	}
+
+	out << "]";
 	return out;
 }

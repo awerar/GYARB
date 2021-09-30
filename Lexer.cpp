@@ -41,13 +41,13 @@ Token Lexer::get_token()
 
         // Check for a special name.
         if (token_buffer == "lam") return Token::Lambda;
-        if (token_buffer == "PRINTN") return Token::PrintNum;
-        if (token_buffer == "PRINTC") return Token::PrintChar;
-        if (token_buffer == "READN") return Token::ReadNum;
-        if (token_buffer == "READC") return Token::ReadChar;
+        if (token_buffer == "PRINTN" ||
+            token_buffer == "PRINTC" ||
+            token_buffer == "READN" ||
+            token_buffer == "READC") return Token::SpecialLambda;
 
-        // Whatever is not a function name must be an identifier.
-        return Token::Id;
+        // Whatever is not a special name must be a variable
+        return Token::Variable;
     }
 
     // Check for a single character token.
@@ -61,5 +61,5 @@ Token Lexer::get_token()
         return Token(c);
     }
 
-    throw Lexical_error{ token_buffer };
+    throw LexicalError{ token_buffer };
 }
