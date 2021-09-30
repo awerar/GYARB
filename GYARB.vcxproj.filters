@@ -60,5 +60,6 @@
   <ItemGroup>
     <Text Include="program.txt" />
     <Text Include="SimpleProgram.txt" />
+    <Text Include="Källor.txt" />
   </ItemGroup>
 </Project>

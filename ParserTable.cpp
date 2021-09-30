@@ -199,8 +199,8 @@ bool ParserTable::perform(ParseStack* stack, Lexer* lexer) const
 	else if (type == ActionType::Done) return true;
 	else if (type == ActionType::Error) throw Syntax_error{ "Error while parsomg with following error message: " + std::any_cast<std::string>(data) };
 
-	std::cout << "<############ STACK ############>\n";
-	print_parse_stack(*stack);
+	//std::cout << "<############ STACK ############>\n";
+	//print_parse_stack(*stack);
 
 	return false;
 }

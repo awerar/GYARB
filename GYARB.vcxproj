@@ -165,6 +165,7 @@
     <ClInclude Include="ParserTable.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Källor.txt" />
     <Text Include="program.txt" />
     <Text Include="SimpleProgram.txt" />
   </ItemGroup>

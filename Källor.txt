@@ -1,0 +1,11 @@
+
+https://www.javatpoint.com/compiler-tutorial
+https://en.wikipedia.org/wiki/Compiler
+https://en.wikipedia.org/wiki/Lexical_analysis
+https://en.wikipedia.org/wiki/Parsing
+
+Huvudkällor:
+https://unclechromedome.org/c++-tutorials/expression-parser/index.html#grammar1 - Lexer
+
+https://en.wikipedia.org/wiki/Simple_LR_parser
+https://en.wikipedia.org/wiki/LR_parser
