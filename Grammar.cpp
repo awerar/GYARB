@@ -40,19 +40,11 @@ std::string get_token_name(Token token)
 	switch (token)
 	{
 	case Token::Id:
-		return "id";
+		return "ID";
 	case Token::Eof:
 		return "eof";
 	case Token::Lambda:
 		return "lam";
-	case Token::ReadNum:
-		return "rn";
-	case Token::ReadChar:
-		return "rc";
-	case Token::PrintNum:
-		return "pn";
-	case Token::PrintChar:
-		return "pc";
 	case Token::OpenParentheses:
 		return "(";
 	case Token::ClosedParebtheses:
@@ -65,6 +57,10 @@ std::string get_token_name(Token token)
 		break;
 	case Token::LambdaTerm:
 		return "LAMBDA";
+	case Token::Variable:
+		return "var";
+	case Token::SpecialLambda:
+		return "spec_lam";
 	default:
 		break;
 	}

@@ -1,9 +1,10 @@
 #include "ParserStack.h"
 #include <iostream>
 
-ParseNode::ParseNode(Token token)
+ParseNode::ParseNode(Token token, std::string text)
 {
 	this->token = token;
+	this->text = text;
 }
 
 ParseNode::~ParseNode()
@@ -21,8 +22,15 @@ void print_parse_tree(ParseNode* tree, int depth)
 		return;
 	}
 
-	for (int i = 0; i < depth; i++) std::cout << "---";
-	std::cout << get_token_name(tree->token) << "\n";
+	std::string msg = "";
+	for (int i = 0; i < depth; i++) msg += "---";
+	msg += get_token_name(tree->token);
+	std::cout << msg;
+
+	for (int i = 50; i > msg.size(); i--) std::cout << " ";
+
+	if (tree->text != "") std::cout << "<" << tree->text << ">";
+	std::cout << "\n";
 
 	for (auto child : tree->children) print_parse_tree(child, depth + 1);
 }

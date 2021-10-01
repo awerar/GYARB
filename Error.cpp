@@ -12,9 +12,9 @@ private:
     std::string message;
 };
 
-using Lexical_error = Error<1>;
-using Syntax_error = Error<2>;
-using Runtime_error = Error<3>;
+using LexicalError = Error<1>;
+using SyntaxError = Error<2>;
+using RuntimeError = Error<3>;
 
 template<int N>
 std::ostream& operator<<(std::ostream& os, const Error<N>& x)

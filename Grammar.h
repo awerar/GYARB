@@ -7,19 +7,16 @@
 #include "Grammar.h"
 
 enum class Token {
-	Id, Eof,
+	Eof, Variable, SpecialLambda,
 
 	//Keywords
 	Lambda,
-
-	//Special Lambdas
-	ReadNum, ReadChar, PrintNum, PrintChar,
 
 	//Symbols
 	OpenParentheses = '(', ClosedParebtheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
 
 	//Non terminals
-	Program, LambdaTerm,
+	Program, LambdaTerm, Id
 };
 
 typedef std::pair<Token, std::vector<Token>> GrammarRule;
@@ -29,19 +26,11 @@ const int max_rule_size = 10;
 const Grammar grammar = Grammar {
 	GrammarRule(Token::Program, { Token::LambdaTerm, Token::Eof }),
 	GrammarRule(Token::LambdaTerm, { Token::LambdaTerm, Token::OpenParentheses, Token::LambdaTerm, Token::ClosedParebtheses }),
-	GrammarRule(Token::LambdaTerm, { Token::Lambda, Token::Id, Token::OpenCurlyBracket, Token::LambdaTerm, Token::ClosedCurlyBracket }),
+	GrammarRule(Token::LambdaTerm, { Token::Lambda, Token::Variable, Token::OpenCurlyBracket, Token::LambdaTerm, Token::ClosedCurlyBracket }),
 	GrammarRule(Token::LambdaTerm, { Token::Id }),
-	GrammarRule(Token::LambdaTerm, { Token::ReadChar }),
-	GrammarRule(Token::LambdaTerm, { Token::ReadNum }),
-	GrammarRule(Token::LambdaTerm, { Token::PrintChar }),
-	GrammarRule(Token::LambdaTerm, { Token::PrintNum }),
+	GrammarRule(Token::Id, { Token::SpecialLambda }),
+	GrammarRule(Token::Id, { Token::Variable }),
 };
-
-/*const Grammar grammar = Grammar{
-	GrammarRule(Token::Program, { Token::LambdaTerm, Token::Eof }),
-	GrammarRule(Token::LambdaTerm, { Token::Id, Token::LambdaTerm,  }),
-	GrammarRule(Token::LambdaTerm, { Token::Id }),
-};*/
 
 extern std::unordered_map<Token, std::unordered_set<int>> token2rules;
 extern std::unordered_set<Token> terminals, non_terminals, tokens;

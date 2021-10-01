@@ -13,48 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Lexer">
+      <UniqueIdentifier>{bcd0374c-7955-4ee4-8139-7bf7d1d221db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser">
+      <UniqueIdentifier>{9274bf02-fcbc-4a21-9250-1dd2a0221cd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{c529bb5a-5e68-41ad-b691-cffd0c2ff990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{e33ae445-d98e-4f34-8a0d-057ea7d2a89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser\CST">
+      <UniqueIdentifier>{2d082a9b-67e8-4f57-80a4-7714de60915c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser\CST">
+      <UniqueIdentifier>{ae7a14c9-cadb-4449-8be2-e154eef5728e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser\AST">
+      <UniqueIdentifier>{c4db56a1-35d8-4dec-aa01-5f7b64322c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser\AST">
+      <UniqueIdentifier>{15def1b8-17d1-40ca-84ff-2c46357d8cb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Lexer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Error.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="ParserStack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParserTable.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Grammar.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Parser\CST</Filter>
+    </ClCompile>
+    <ClCompile Include="ParserStack.cpp">
+      <Filter>Source Files\Parser\CST</Filter>
+    </ClCompile>
+    <ClCompile Include="ParserTable.cpp">
+      <Filter>Source Files\Parser\CST</Filter>
+    </ClCompile>
+    <ClCompile Include="ASTNode.cpp">
+      <Filter>Source Files\Parser\AST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lexer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Lexer.h">
+      <Filter>Header Files\Lexer</Filter>
     </ClInclude>
-    <ClInclude Include="ParserTable.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files\Parser</Filter>
     </ClInclude>
     <ClInclude Include="Grammar.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Parser\CST</Filter>
     </ClInclude>
     <ClInclude Include="ParserStack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Parser\CST</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserTable.h">
+      <Filter>Header Files\Parser\CST</Filter>
+    </ClInclude>
+    <ClInclude Include="ASTNode.h">
+      <Filter>Header Files\Parser\AST</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

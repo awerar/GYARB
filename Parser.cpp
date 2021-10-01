@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "Error.cpp"
 #include <iostream>
 
 //https://en.wikipedia.org/wiki/LR_parser#Bottom-up_parse_tree_for_example_A*2_+_1
@@ -20,7 +21,17 @@ ParseNode* Parser::parse()
 	if (result != NULL) return result;
 
 	ParseStack* stack = new ParseStack({ ParseStackFrame(0, NULL) });
-	while (!table.perform(stack, lexer));
+
+	try {
+		while (!table.perform(stack, lexer));
+	}
+	catch (SyntaxError e) {
+		std::cout << e << std::endl;
+		std::cout << "DUMP OF PARSE STACK:\n";
+		print_parse_stack(*stack);
+
+		throw e;
+	}
 
 	result = stack->top().second;
 	delete stack;
