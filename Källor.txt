@@ -3,6 +3,7 @@ https://www.javatpoint.com/compiler-tutorial
 https://en.wikipedia.org/wiki/Compiler
 https://en.wikipedia.org/wiki/Lexical_analysis
 https://en.wikipedia.org/wiki/Parsing
+https://en.wikipedia.org/wiki/Abstract_syntax_tree
 
 Huvudkällor:
 https://unclechromedome.org/c++-tutorials/expression-parser/index.html#grammar1 - Lexer
