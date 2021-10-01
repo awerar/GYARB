@@ -44,7 +44,7 @@ Token Lexer::get_token()
         if (token_buffer == "PRINTN" ||
             token_buffer == "PRINTC" ||
             token_buffer == "READN" ||
-            token_buffer == "READC") return Token::SpecialLambda;
+            token_buffer == "READC") return Token::Builtin;
 
         // Whatever is not a special name must be a variable
         return Token::Variable;

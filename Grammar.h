@@ -7,13 +7,13 @@
 #include "Grammar.h"
 
 enum class Token {
-	Eof, Variable, SpecialLambda,
+	Eof, Variable, Builtin,
 
 	//Keywords
 	Lambda,
 
 	//Symbols
-	OpenParentheses = '(', ClosedParebtheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
+	OpenParentheses = '(', ClosedParentheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
 
 	//Non terminals
 	Program, LambdaTerm, Id
@@ -25,10 +25,10 @@ typedef std::vector<GrammarRule> Grammar;
 const int max_rule_size = 10;
 const Grammar grammar = Grammar {
 	GrammarRule(Token::Program, { Token::LambdaTerm, Token::Eof }),
-	GrammarRule(Token::LambdaTerm, { Token::LambdaTerm, Token::OpenParentheses, Token::LambdaTerm, Token::ClosedParebtheses }),
+	GrammarRule(Token::LambdaTerm, { Token::LambdaTerm, Token::OpenParentheses, Token::LambdaTerm, Token::ClosedParentheses }),
 	GrammarRule(Token::LambdaTerm, { Token::Lambda, Token::Variable, Token::OpenCurlyBracket, Token::LambdaTerm, Token::ClosedCurlyBracket }),
 	GrammarRule(Token::LambdaTerm, { Token::Id }),
-	GrammarRule(Token::Id, { Token::SpecialLambda }),
+	GrammarRule(Token::Id, { Token::Builtin }),
 	GrammarRule(Token::Id, { Token::Variable }),
 };
 

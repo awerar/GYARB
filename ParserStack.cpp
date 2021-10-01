@@ -29,7 +29,7 @@ void print_parse_tree(ParseNode* tree, int depth)
 
 	for (int i = 50; i > msg.size(); i--) std::cout << " ";
 
-	if (tree->text != "") std::cout << "<" << tree->text << ">";
+	if (tree->text != "") std::cout << tree->text;
 	std::cout << "\n";
 
 	for (auto child : tree->children) print_parse_tree(child, depth + 1);

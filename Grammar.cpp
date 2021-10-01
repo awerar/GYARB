@@ -47,7 +47,7 @@ std::string get_token_name(Token token)
 		return "lam";
 	case Token::OpenParentheses:
 		return "(";
-	case Token::ClosedParebtheses:
+	case Token::ClosedParentheses:
 		return ")";
 	case Token::OpenCurlyBracket:
 		return "{";
@@ -59,8 +59,8 @@ std::string get_token_name(Token token)
 		return "LAMBDA";
 	case Token::Variable:
 		return "var";
-	case Token::SpecialLambda:
-		return "spec_lam";
+	case Token::Builtin:
+		return "builtin";
 	default:
 		break;
 	}
