@@ -27,7 +27,7 @@ void print_parse_tree(ParseNode* tree, int depth)
 	msg += get_token_name(tree->token);
 	std::cout << msg;
 
-	for (int i = 50; i > msg.size(); i--) std::cout << " ";
+	for (int i = 70; i > msg.size(); i--) std::cout << " ";
 
 	if (tree->text != "") std::cout << tree->text;
 	std::cout << "\n";

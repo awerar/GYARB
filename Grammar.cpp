@@ -57,6 +57,10 @@ std::string get_token_name(Token token)
 		break;
 	case Token::LambdaTerm:
 		return "LAMBDA";
+	case Token::LambdaApplication:
+		return "APPLICATION";
+	case Token::LambdaAbstraction:
+		return "ABSTRACTION";
 	case Token::Variable:
 		return "var";
 	case Token::Builtin:

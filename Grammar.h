@@ -16,7 +16,7 @@ enum class Token {
 	OpenParentheses = '(', ClosedParentheses = ')', OpenCurlyBracket = '{', ClosedCurlyBracket = '}',
 
 	//Non terminals
-	Program, LambdaTerm, Id
+	Program, LambdaTerm, LambdaAbstraction, LambdaApplication, Id
 };
 
 typedef std::pair<Token, std::vector<Token>> GrammarRule;
@@ -25,8 +25,10 @@ typedef std::vector<GrammarRule> Grammar;
 const int max_rule_size = 10;
 const Grammar grammar = Grammar {
 	GrammarRule(Token::Program, { Token::LambdaTerm, Token::Eof }),
-	GrammarRule(Token::LambdaTerm, { Token::LambdaTerm, Token::OpenParentheses, Token::LambdaTerm, Token::ClosedParentheses }),
-	GrammarRule(Token::LambdaTerm, { Token::Lambda, Token::Variable, Token::OpenCurlyBracket, Token::LambdaTerm, Token::ClosedCurlyBracket }),
+	GrammarRule(Token::LambdaTerm, { Token::LambdaApplication }),
+	GrammarRule(Token::LambdaApplication, { Token::LambdaTerm, Token::OpenParentheses, Token::LambdaTerm, Token::ClosedParentheses }),
+	GrammarRule(Token::LambdaTerm, { Token::LambdaAbstraction }),
+	GrammarRule(Token::LambdaAbstraction, { Token::Lambda, Token::Variable, Token::OpenCurlyBracket, Token::LambdaTerm, Token::ClosedCurlyBracket }),
 	GrammarRule(Token::LambdaTerm, { Token::Id }),
 	GrammarRule(Token::Id, { Token::Builtin }),
 	GrammarRule(Token::Id, { Token::Variable }),

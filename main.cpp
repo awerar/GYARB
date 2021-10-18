@@ -6,6 +6,7 @@
 #include "Lexer.h"
 #include "main.h"
 #include "Parser.h"
+#include "ASTNode.h"
 
 using namespace std;
 
@@ -15,9 +16,16 @@ int main()
 
     Lexer* lexer = get_lexer("program.txt");
     Parser* parser = new Parser(lexer);
-    ParseNode* result = parser->parse();
-    std::cout << "FINAL TREE:\n";
-    print_parse_tree(result);
+    ParseNode* cst = parser->parse();
+
+    std::cout << "CST:\n";
+    print_parse_tree(cst);
+    std::cout << std::endl;
+
+    ASTNode* ast = generate_ast(cst);
+
+    std::cout << "AST:\n";
+    print_AST(ast);
 }
 
 Lexer* get_lexer(string file_name) {
