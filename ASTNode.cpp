@@ -78,3 +78,27 @@ void print_AST(ASTNode* tree, int depth)
 
     for (auto child : tree->children) print_AST(child, depth + 1);
 }
+
+void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int> node_count = NULL)
+{
+    if (node_count == NULL) node_count = std::make_shared<int>(new int(0));
+
+    SymbolNode* node = parent;
+    if (ast->type == ASTNodeType::Abstraction) {
+        SymbolNode* new_node = new SymbolNode();
+        new_node->id = *node_count;
+        new_node->symbol = *ast->data;
+        new_node->parent = parent;
+        parent->children.push_back(new_node);
+
+        (*node_count)++;
+
+        node = new_node;
+    }
+
+    ast->symbol_tree = node;
+
+    for (auto child : ast->children) {
+        generate_symbol_tree(child, node, node_count);
+    }
+}
