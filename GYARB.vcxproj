@@ -156,6 +156,7 @@
     <ClCompile Include="ParserStack.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParserTable.cpp" />
+    <ClCompile Include="SemanticAnalysis.cpp" />
     <ClCompile Include="SymbolTree.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParserStack.h" />
     <ClInclude Include="ParserTable.h" />
+    <ClInclude Include="SemanticAnalysis.h" />
     <ClInclude Include="SymbolTree.h" />
   </ItemGroup>
   <ItemGroup>

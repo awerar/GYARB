@@ -8,6 +8,13 @@ ASTNode::ASTNode(ASTNodeType type, std::string* data, int start_size) : children
     this->data = data;
 }
 
+ASTNode::~ASTNode()
+{
+    delete data;
+    for (auto child : children) delete child;
+    delete symbol_tree;
+}
+
 std::ostream& operator<<(std::ostream& out, ASTNode const& node)
 {
     switch (node.type)
@@ -79,9 +86,9 @@ void print_AST(ASTNode* tree, int depth)
     for (auto child : tree->children) print_AST(child, depth + 1);
 }
 
-void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int> node_count = NULL)
+void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int> node_count)
 {
-    if (node_count == NULL) node_count = std::make_shared<int>(new int(0));
+    if (node_count == nullptr) node_count = std::make_shared<int>(0);
 
     SymbolNode* node = parent;
     if (ast->type == ASTNodeType::Abstraction) {
@@ -89,7 +96,7 @@ void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int>
         new_node->id = *node_count;
         new_node->symbol = *ast->data;
         new_node->parent = parent;
-        parent->children.push_back(new_node);
+        if (parent != NULL) parent->children.push_back(new_node);
 
         (*node_count)++;
 
@@ -101,4 +108,11 @@ void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int>
     for (auto child : ast->children) {
         generate_symbol_tree(child, node, node_count);
     }
+}
+
+SymbolNode* lookup_symbol(SymbolNode* node, std::string symbol)
+{
+    if (node == NULL) return NULL;
+    else if (node->symbol == symbol) return node;
+    else return lookup_symbol(node->parent, symbol);
 }

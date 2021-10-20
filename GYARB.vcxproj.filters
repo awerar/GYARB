@@ -66,6 +66,9 @@
     <ClCompile Include="SymbolTree.cpp">
       <Filter>Source Files\Parser\AST</Filter>
     </ClCompile>
+    <ClCompile Include="SemanticAnalysis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files\Parser\AST</Filter>
     </ClInclude>
     <ClInclude Include="SymbolTree.h">
+      <Filter>Header Files\Parser\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="SemanticAnalysis.h">
       <Filter>Header Files\Parser\AST</Filter>
     </ClInclude>
   </ItemGroup>

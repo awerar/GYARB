@@ -4,10 +4,10 @@
 #include <memory>
 
 struct SymbolNode {
-	SymbolNode* parent;
+	SymbolNode* parent = NULL;
 	std::vector<SymbolNode*> children;
 
-	int id;
+	int id = -1;
 	std::string symbol;
 
 	~SymbolNode();
