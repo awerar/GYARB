@@ -1,1 +1,5 @@
-lam f { lam x { x } }(q)
+lam p { 
+	p(lam f { 
+		lam x { x } 
+	})
+}(PRINTN)
