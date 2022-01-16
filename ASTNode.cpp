@@ -33,14 +33,19 @@ std::ostream& operator<<(std::ostream& out, ASTNode const& node)
         break;
     }
 
-    if (node.data != NULL) out << " " << *node.data;
+    if ((node.type == ASTNodeType::Abstraction || node.type == ASTNodeType::Variable) && node.symbol_tree != nullptr && node.data != nullptr) {
+        out << " " << lookup_symbol(node.symbol_tree, *node.data)->id;
+    }
+    else if (node.data != nullptr) {
+        out << " " << *node.data;
+    }
 
     return out;
 }
 
 ASTNode* generate_ast(ParseNode* parse_tree)
 {
-    ASTNode* node = NULL;
+    ASTNode* node = nullptr;
 
     switch (parse_tree->token)
     {
@@ -49,7 +54,7 @@ ASTNode* generate_ast(ParseNode* parse_tree)
         return generate_ast(parse_tree->children[0]);
 
     case Token::LambdaApplication:
-        node = new ASTNode(ASTNodeType::Application, NULL);
+        node = new ASTNode(ASTNodeType::Application, nullptr);
 
         for (ParseNode* child : parse_tree->children) {
             if (child->token == Token::LambdaTerm) node->children.push_back(generate_ast(child));
@@ -58,7 +63,7 @@ ASTNode* generate_ast(ParseNode* parse_tree)
         break;
 
     case Token::LambdaAbstraction:
-        node = new ASTNode(ASTNodeType::Abstraction, NULL, 1);
+        node = new ASTNode(ASTNodeType::Abstraction, nullptr, 1);
 
         for (ParseNode* child : parse_tree->children) {
             if (child->token == Token::Variable) node->data = new std::string(child->text);
@@ -74,7 +79,7 @@ ASTNode* generate_ast(ParseNode* parse_tree)
         return new ASTNode(ASTNodeType::Builtin, new std::string(parse_tree->text));
     }
 
-    if (node != NULL) return node;
+    if (node != nullptr) return node;
     throw RuntimeError{ "Error building AST"};
 }
 
@@ -96,7 +101,7 @@ void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int>
         new_node->id = *node_count;
         new_node->symbol = *ast->data;
         new_node->parent = parent;
-        if (parent != NULL) parent->children.push_back(new_node);
+        if (parent != nullptr) parent->children.push_back(new_node);
 
         (*node_count)++;
 
@@ -112,7 +117,7 @@ void generate_symbol_tree(ASTNode* ast, SymbolNode* parent, std::shared_ptr<int>
 
 SymbolNode* lookup_symbol(SymbolNode* node, std::string symbol)
 {
-    if (node == NULL) return NULL;
+    if (node == nullptr) return nullptr;
     else if (node->symbol == symbol) return node;
     else return lookup_symbol(node->parent, symbol);
 }

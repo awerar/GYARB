@@ -7,7 +7,7 @@ void verify_symbols(ASTNode* ast)
 		std::string symbol = *ast->data;
 		SymbolNode* symbol_node = lookup_symbol(ast->symbol_tree, *ast->data);
 
-		if (symbol_node == NULL) {
+		if (symbol_node == nullptr) {
 			throw SyntaxError{ "Unknown symbol " + symbol };
 		}
 	}

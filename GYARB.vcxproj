@@ -24,6 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GYARB</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GYARB Parser</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,6 +45,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -139,6 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +154,8 @@
     <ClCompile Include="ASTNode.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Grammar.cpp" />
+    <ClCompile Include="Interpreter.cpp" />
+    <ClCompile Include="InterpreterLambda.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParserStack.cpp" />
@@ -162,6 +167,8 @@
   <ItemGroup>
     <ClInclude Include="ASTNode.h" />
     <ClInclude Include="Grammar.h" />
+    <ClInclude Include="Interpreter.h" />
+    <ClInclude Include="InterpreterLambda.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Parser.h" />
@@ -171,9 +178,11 @@
     <ClInclude Include="SymbolTree.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="CurrProgram.txt" />
     <Text Include="Källor.txt" />
     <Text Include="program.txt" />
     <Text Include="SimpleProgram.txt" />
+    <Text Include="TrickyProgram.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

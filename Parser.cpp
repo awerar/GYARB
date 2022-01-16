@@ -7,8 +7,7 @@
 Parser::Parser(Lexer* lexer)
 {
 	this->lexer = lexer;
-	this->result = NULL;
-	std::cout << table;
+	this->result = nullptr;
 }
 
 Parser::~Parser()
@@ -18,9 +17,9 @@ Parser::~Parser()
 
 ParseNode* Parser::parse()
 {
-	if (result != NULL) return result;
+	if (result != nullptr) return result;
 
-	ParseStack* stack = new ParseStack({ ParseStackFrame(0, NULL) });
+	ParseStack* stack = new ParseStack({ ParseStackFrame(0, nullptr) });
 
 	try {
 		while (!table.perform(stack, lexer));

@@ -1,0 +1,5 @@
+lam x {
+	x(x(lam t { t }))
+}(
+	lam q { q }
+)
