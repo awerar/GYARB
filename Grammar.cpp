@@ -53,7 +53,7 @@ std::string get_token_name(Token token)
 		return "{";
 	case Token::ClosedCurlyBracket:
 		return "}";
-	case Token::Program:
+	case Token::Start:
 		break;
 	case Token::LambdaTerm:
 		return "LAMBDA";

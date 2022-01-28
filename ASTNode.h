@@ -5,7 +5,7 @@
 #include "SymbolTree.h"
 
 enum class ASTNodeType {
-	Variable, Abstraction, Application, Builtin
+	Variable, Abstraction, Application, Builtin, Number
 };
 
 struct ASTNode

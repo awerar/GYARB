@@ -1,0 +1,11 @@
+lam add {
+	PRINTN(add(READN(lam x { x }))(READN(lam x { x })))(lam x { x })
+}(lam n1 {
+	lam n2 {
+		lam f {
+			lam x {
+				n2(f)(n1(f)(x))
+			}
+		}
+	}
+})

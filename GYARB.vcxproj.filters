@@ -119,9 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="program.txt" />
-    <Text Include="SimpleProgram.txt" />
+    <Text Include="AddProgram.txt" />
     <Text Include="Källor.txt" />
     <Text Include="TrickyProgram.txt" />
-    <Text Include="CurrProgram.txt" />
+    <Text Include="HelloWorld.txt" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,0 @@
-lam p { 
-	p(lam f { 
-		lam x { x } 
-	})(lam x { x } )
-}(PRINTN)

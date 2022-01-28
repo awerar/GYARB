@@ -14,11 +14,16 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
+    if (argc <= 1) {
+        std::cout << "You have to specifiy a churchscript file!"<<std::endl;
+        return 1;
+    }
+
     initialize_grammar();
 
-    Lexer* lexer = get_lexer("program.txt");
+    Lexer* lexer = get_lexer(argv[1]);
     Parser* parser = new Parser(lexer);
     ParseNode* cst = parser->parse();
     ASTNode* ast = generate_ast(cst);
@@ -27,10 +32,12 @@ int main()
     generate_symbol_tree(ast);
     verify_semantics(ast);
 
-    print_AST(ast);
+    //print_AST(ast);
 
     Interpreter* interpreter = new Interpreter(ast, &std::cin, &std::cout);
     interpreter->run();
+
+    return 0;
 }
 
 Lexer* get_lexer(string file_name) {

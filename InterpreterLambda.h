@@ -3,6 +3,7 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include <set>
 
 template<typename T> using Shared = std::shared_ptr<T>;
 
@@ -40,64 +41,67 @@ struct InterpreterLambda{
 	LambdaType type;
 
 	virtual void print(int depth, std::ostream& out) const = 0;
-	virtual InterpreterLambda* copy() const = 0;
-
-	virtual ~InterpreterLambda() {}
+	virtual Shared<InterpreterLambda> copy() const = 0;
+	virtual bool isReferenceFree(Shared<std::multiset<int>> identifiers) const = 0;
 };
 
 struct DeclarationLambda : public InterpreterLambda {
 	int varID;
-	InterpreterLambda* contents;
+	Shared<InterpreterLambda> contents;
 
-	DeclarationLambda(int varID, InterpreterLambda* contents);
-	virtual ~DeclarationLambda();
+	DeclarationLambda(int varID, Shared<InterpreterLambda> contents);
 
 	// Inherited via InterpreterLambda
 	virtual void print(int depth, std::ostream& out) const override;
 
 	// Inherited via InterpreterLambda
-	virtual InterpreterLambda* copy() const override;
+	virtual Shared<InterpreterLambda> copy() const override;
+
+	virtual bool isReferenceFree(Shared<std::multiset<int>> identifiers) const override;
 };
 
 struct ImplementationLambda : public InterpreterLambda {
-	InterpreterLambda* func;
-	InterpreterLambda* arg;
+	Shared<InterpreterLambda> func;
+	Shared<InterpreterLambda> arg;
 
-	ImplementationLambda(InterpreterLambda* func, InterpreterLambda* arg);
-	virtual ~ImplementationLambda();
+	ImplementationLambda(Shared<InterpreterLambda> func, Shared<InterpreterLambda> arg);
 
 	// Inherited via InterpreterLambda
 	virtual void print(int depth, std::ostream& out) const override;
 
 	// Inherited via InterpreterLambda
-	virtual InterpreterLambda* copy() const override;
+	virtual Shared<InterpreterLambda> copy() const override;
+
+	virtual bool isReferenceFree(Shared<std::multiset<int>> identifiers) const override;
 };
 
 struct VariableLambda : public InterpreterLambda {
 	int varID;
 
 	VariableLambda(int varID);
-	virtual ~VariableLambda();
 
 	// Inherited via InterpreterLambda
 	virtual void print(int depth, std::ostream& out) const override;
 
 	// Inherited via InterpreterLambda
-	virtual InterpreterLambda* copy() const override;
+	virtual Shared<InterpreterLambda> copy() const override;
+
+	virtual bool isReferenceFree(Shared<std::multiset<int>> identifiers) const override;
 };
 
 struct BuiltinLambda : public InterpreterLambda {
 	BuiltinType builtinType;
-	std::vector<InterpreterLambda*> args;
+	std::vector<Shared<InterpreterLambda>> args;
 
-	BuiltinLambda(BuiltinType builtinType, std::vector<InterpreterLambda*> args);
-	virtual ~BuiltinLambda();
+	BuiltinLambda(BuiltinType builtinType, std::vector<Shared<InterpreterLambda>> args);
 
 	// Inherited via InterpreterLambda
 	virtual void print(int depth, std::ostream& out) const override;
 
 	// Inherited via InterpreterLambda
-	virtual InterpreterLambda* copy() const override;
+	virtual Shared<InterpreterLambda> copy() const override;
+
+	virtual bool isReferenceFree(Shared<std::multiset<int>> identifiers) const override;
 };
 
 template<typename T, std::enable_if_t<std::is_base_of_v<InterpreterLambda, T>, bool> = true>
@@ -106,8 +110,8 @@ inline T* As(const Shared<InterpreterLambda>& base)
 	return reinterpret_cast<T*>(base.get());
 }
 
-InterpreterLambda* bind(const InterpreterLambda* lambda, const InterpreterLambda* arg, Interpreter* interpreter);
-InterpreterLambda* bind(const InterpreterLambda* lambda, const InterpreterLambda* arg, int varID, Interpreter* interpreter);
+Shared<InterpreterLambda> bind(const Shared<InterpreterLambda> lambda, const Shared<InterpreterLambda> arg, Interpreter* interpreter);
+Shared<InterpreterLambda> bind(const Shared<InterpreterLambda> lambda, const Shared<InterpreterLambda> arg, int varID, Interpreter* interpreter);
 
-int lambdaToNum(const InterpreterLambda* lam);
-InterpreterLambda* numToLambda(int num, Interpreter* interpreter);
+int lambdaToNum(const Shared<InterpreterLambda> lam);
+Shared<InterpreterLambda> numToLambda(int num, Interpreter* interpreter);

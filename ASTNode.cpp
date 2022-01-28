@@ -31,6 +31,9 @@ std::ostream& operator<<(std::ostream& out, ASTNode const& node)
     case ASTNodeType::Builtin:
         out << "builtin";
         break;
+    case ASTNodeType::Number:
+        out << "num";
+        break;
     }
 
     if ((node.type == ASTNodeType::Abstraction || node.type == ASTNodeType::Variable) && node.symbol_tree != nullptr && node.data != nullptr) {
@@ -74,6 +77,9 @@ ASTNode* generate_ast(ParseNode* parse_tree)
 
     case Token::Variable:
         return new ASTNode(ASTNodeType::Variable, new std::string(parse_tree->text));
+
+    case Token::Number:
+        return new ASTNode(ASTNodeType::Number, new std::string(parse_tree->text));
 
     case Token::Builtin:
         return new ASTNode(ASTNodeType::Builtin, new std::string(parse_tree->text));

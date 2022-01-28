@@ -1,5 +1,1 @@
-lam n1 {
-	lam n2 {
-		print(n1)(print(n2)(lam x { x }))
-	}
-}
+PRINTN(lam f { lam x { f(f(f(f(x)))) } })(lam x: x)

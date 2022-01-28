@@ -49,6 +49,19 @@ Token Lexer::get_token()
         // Whatever is not a special name must be a variable
         return Token::Variable;
     }
+    else if (isdigit(c)) {
+        token_buffer = c;
+        c = input.get();
+
+        while (isalnum(c)) {
+            token_buffer += c;
+            c = input.get();
+        }
+
+        input.putback(c);
+
+        return Token::Number;
+    }
 
     // Check for a single character token.
     token_buffer = c;
@@ -58,6 +71,7 @@ Token Lexer::get_token()
         case ')':
         case '{':
         case '}':
+        case ':':
         return Token(c);
     }
 

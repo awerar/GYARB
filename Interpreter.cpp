@@ -2,26 +2,28 @@
 #include <iostream>
 #include "Error.cpp"
 
-InterpreterLambda* Interpreter::run(ASTNode* ast)
+Shared<InterpreterLambda> Interpreter::run(ASTNode* ast)
 {
 	if (ast->type == ASTNodeType::Variable) {
-		return new VariableLambda(lookup_symbol(ast->symbol_tree, *ast->data)->id);
+		return MakeShared<VariableLambda>(lookup_symbol(ast->symbol_tree, *ast->data)->id);
 	}
 	else if (ast->type == ASTNodeType::Abstraction) {
-		return new DeclarationLambda(ast->symbol_tree->id, run(ast->children[0]));
+		return MakeShared<DeclarationLambda>(ast->symbol_tree->id, run(ast->children[0]));
 	}
 	else if (ast->type == ASTNodeType::Application) {
-		InterpreterLambda* func = run(ast->children[0]);
-		InterpreterLambda* arg = run(ast->children[1]);
+		Shared<InterpreterLambda> func = run(ast->children[0]);
+		Shared<InterpreterLambda> arg = run(ast->children[1]);
 		
-		InterpreterLambda* result = bind(func, arg, this);
-		delete func;
-		delete arg;
+		Shared<InterpreterLambda> result = bind(func, arg, this);
 		return result;
 	}
 	else if (ast->type == ASTNodeType::Builtin) {
 		std::string builtin_name = *ast->data;
-		return new BuiltinLambda(nameToBuiltinType.at(builtin_name), {});
+		return MakeShared<BuiltinLambda>(nameToBuiltinType.at(builtin_name), std::vector<Shared<InterpreterLambda>>());
+	}
+	else if (ast->type == ASTNodeType::Number) {
+		int num = std::stoi(*ast->data);
+		return numToLambda(num, this);
 	}
 
 	return nullptr;
@@ -54,7 +56,6 @@ Interpreter::Interpreter(ASTNode* ast, std::istream* input, std::ostream* output
 
 void Interpreter::run()
 {
-	InterpreterLambda* result = run(ast);
-	result->print(0, *output);
-	delete result;
+	Shared<InterpreterLambda> result = run(ast);
+	//result->print(0, *output);
 }

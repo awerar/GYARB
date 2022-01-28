@@ -148,6 +148,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>1000000000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -178,10 +179,10 @@
     <ClInclude Include="SymbolTree.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CurrProgram.txt" />
+    <Text Include="HelloWorld.txt" />
     <Text Include="Källor.txt" />
     <Text Include="program.txt" />
-    <Text Include="SimpleProgram.txt" />
+    <Text Include="AddProgram.txt" />
     <Text Include="TrickyProgram.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

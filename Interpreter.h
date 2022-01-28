@@ -9,7 +9,7 @@ private:
 	ASTNode* ast;
 	int symbols_used;
 
-	InterpreterLambda* run(ASTNode* ast);
+	Shared<InterpreterLambda> run(ASTNode* ast);
 	int get_symbols_used(ASTNode* ast);
 
 public:
